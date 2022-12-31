@@ -284,7 +284,6 @@ local Button = LagTab:CreateButton({
                     
                     local p1 = tonumber(impactValue)
                     local p2 = tonumber(rateValue)
-                    print(p1, p2)
                     bomb(p1, p2) 
                     
 		        end
@@ -352,7 +351,6 @@ local Keybind = LagTab:CreateKeybind({
                     
                     local p1 = tonumber(impactValue)
                     local p2 = tonumber(rateValue)
-                    print(p1, p2)
                     bomb(p1, p2) 
                     
 		        end
@@ -384,7 +382,6 @@ if not isfile(ConfigurationFolder.."/lagscripthub"..ConfigurationExtension) then
     Slider2:Set(100) 
 	Slider3:Set(1)
 	Slider4:Set(1) 
-print('test 2')
 else
     Rayfield:Notify({
     Title = "Settings loaded!",
@@ -392,7 +389,6 @@ else
     Duration = 6,
     Image = 3944680095
 })
-print('test')
 end
 
 
