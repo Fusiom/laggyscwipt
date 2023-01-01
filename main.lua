@@ -233,7 +233,7 @@ local Button = LagTab:CreateButton({
 		Toggled = true
 		    coroutine.resume(coroutine.create(function()
 		        if debounce == true then return end
-		        local counter = 0
+		        local counter = 1
 		        debounce = true
 		        while true do
                     wait(intervalValue)
