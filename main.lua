@@ -198,7 +198,7 @@ local Slider4 = AutoLag:CreateSlider({
 
 -- Info
 
-local Paragraph = Info:CreateParagraph({Title = "Settings", Content = "Don't touch the settings from the default preset too much unless you know what you're doing. If you would like to get a greater/lesser impact from the lag, change the packet impact."})
+local Paragraph = Info:CreateParagraph({Title = "Settings", Content = "Just don't go above like 3 packets and you'll be fine, better to stay on 1 packet tho."})
 --[[
 local Button = Info:CreateButton({
 	Name = "Apply these settings",
